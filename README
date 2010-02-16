@@ -1,0 +1,17 @@
+README
+
+
+This extension to the YUI DataTable widget provides a context menu that enables column show/hiding.
+
+Pass the config option showColumnChooser: true in your DataTable config object
+and make sure ContextMenu is included in your page.
+
+Right-clicking on the table header will show the context menu, listing all columns
+in the table and with visible ones checked.  Clicking on a menu item will show/hide the column.
+
+
+It's a bit like http://developer.yahoo.com/yui/examples/datatable/dt_colshowhide.html
+but built in by extending the DataTable
+
+Matt Parker
+16/2/2010.
