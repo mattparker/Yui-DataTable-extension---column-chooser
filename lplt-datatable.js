@@ -199,8 +199,9 @@ YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
 
      } 
 );
-     
-     
+
+
+YAHOO.namespace("LPLT");
 YAHOO.LPLT.DataTable = lpltTable;
 
 
