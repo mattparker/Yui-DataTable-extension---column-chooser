@@ -47,6 +47,7 @@ http://developer.yahoo.net/yui/license.txt
  
  
  
+ 
 YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
 
      /**
@@ -101,6 +102,11 @@ YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
          
          // menu click handler
          cMenu.subscribe( "click", this.doColumnChooser, this, true );
+         // And a column show/hide handler that updates the menu check states.
+         // Doing it this way means that if columns are shown/hidden in other 
+         //   ways the menu will be up to date
+         this.subscribe( "columnHideEvent" , this.updateColumnChooser, this, true );
+         this.subscribe( "columnShowEvent" , this.updateColumnChooser, this, true );
          
          // finally, make sure the context menu is destroyed when the table is:
          this.subscribe( "beforeDestroyEvent" , this.destroyColumnChooser , this, true);
@@ -130,6 +136,24 @@ YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
              this._addColumnChooserMenuItems( cMenu );
              
              this._columnChooserMenu = cMenu;
+       },
+       
+
+
+
+       
+       /**
+        * Updates the 'checked' state of the menu based on visibility of cols.
+        */
+       updateColumnChooser: function( ){
+
+         // loop through the columns:
+         var allColumns = this.getColumnSet().keys,
+             cMenu = this._columnChooserMenu;
+       
+         for( var i = 0, l = allColumns.length; i < l; i++ ){
+             cMenu.getItem( i ).cfg.setProperty( "checked", !allColumns[i].hidden );
+         }
        },
 
 
@@ -167,14 +191,13 @@ YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
          // This is the column:
              col = this.getColumn( tar.value );
 
-         // If column is visible it's checked:
-         if( tar.cfg.getProperty( "checked" ) && !col.hidden ){
-           tar.cfg.setProperty( "checked", false );
-           this.hideColumn( col );
+         // If column is hidden, show it:
+         if( col.hidden ){
+           this.showColumn( col );
          }
          else{
-           tar.cfg.setProperty( "checked" , true );
-           this.showColumn( col );         
+           //tar.cfg.setProperty( "checked" , true );
+           this.hideColumn( col );
          }
          
        },
@@ -184,7 +207,9 @@ YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
        * Destroys the column chooser context menu.
        */
       destroyColumnChooser: function(){
-         this._columnChooserMenu.destroy();
+         if( this._columnChooserMenu !== undefined ){
+            this._columnChooserMenu.destroy();
+         }
       },
 
        
