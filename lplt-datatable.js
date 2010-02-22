@@ -237,7 +237,7 @@ YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
          
         
          // render the menu
-         cMenu.render( document.body );
+         cMenu.render( this.get("element") );
          
          // menu click handler
          cMenu.subscribe( "click", this.doColumnChooser, this, true );
@@ -306,7 +306,7 @@ YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
          var allColumns = this.getColumnSet().keys;
        
          for( var i = 0, l = allColumns.length; i < l; i++ ){
-             cMenu.addItem( { text: allColumns[ i ].label , 
+             cMenu.addItem( { text: allColumns[ i ].label || allColumns[ i ].getKey(), 
                               value: allColumns[ i ].getKey() , 
                               checked: !allColumns[i].hidden } );
          }
