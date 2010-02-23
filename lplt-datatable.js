@@ -264,7 +264,7 @@ YAHOO.extend( lpltTable, YAHOO.widget.DataTable, {
         * Clears the column chooser context menu and re-reads columns
         */
        refreshColumnChooserMenu: function(){
-             cMenu = this._columnChooserMenu;
+             var cMenu = this._columnChooserMenu;
              
              if( cMenu === undefined || cMenu === null ){
                return false;
